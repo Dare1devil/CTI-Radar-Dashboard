@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="color-scheme" content="dark"/>
+  <meta name="theme-color" content="#0a1221"/>
+  <meta name="description" content="Live cybersecurity vulnerability, exploited CVE and threat intelligence dashboard from original security sources."/>
+  <title>CTI Radar | Threat Intelligence Dashboard</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-logo">⌁</div><div><strong>CTI RADAR</strong><span>Threat Intelligence Center</span></div></div>
+      <div class="side-label">NAVIGATION</div>
+      <nav class="nav" aria-label="تصنيف المحتوى">
+        <button class="nav-item active" data-view="all"><span class="nav-icon">▦</span><span>جميع التنبيهات</span><b id="count-all">–</b></button>
+        <button class="nav-item" data-view="exploited"><span class="nav-icon">◉</span><span>Active Exploitation</span><b id="count-exploited">–</b></button>
+        <button class="nav-item" data-view="cve"><span class="nav-icon">#</span><span>CVE Database</span><b id="count-cve">–</b></button>
+        <button class="nav-item" data-view="news"><span class="nav-icon">☷</span><span>Security News</span><b id="count-news">–</b></button>
+        <button class="nav-item" data-view="research"><span class="nav-icon">◇</span><span>Exploit Research</span><b id="count-research">–</b></button>
+        <button class="nav-item" data-view="apple"><span class="nav-icon">◈</span><span>Apple / iOS</span></button>
+        <button class="nav-item" data-view="saved"><span class="nav-icon">☆</span><span>المحفوظات</span><b id="count-saved">0</b></button>
+      </nav>
+      <div class="side-label sources-label">INTELLIGENCE FEEDS</div>
+      <div class="sources" id="source-health" aria-live="polite"><span class="muted">بانتظار أول عملية جمع بيانات...</span></div>
+      <div class="sidebar-bottom"><div class="live-dot"></div><div><strong>Automatic Collector</strong><span>GitHub Actions · كل ساعة تقريباً</span></div></div>
+    </aside>
+    <main class="main">
+      <header class="header">
+        <div><div class="breadcrumb">INTELLIGENCE / OVERVIEW</div><h1>لوحة الاستخبارات الأمنية <span class="h1-signal">●</span></h1><p class="subtitle">CVE Monitoring · Zero-Day · Exploits · Incident & Threat News</p></div>
+        <div class="header-actions"><div class="last-sync"><span class="small-muted">آخر تحديث ناجح</span><strong id="updated-time">لم يتم بعد</strong></div><button id="enable-notifications" class="refresh" title="إشعارات أثناء فتح لوحة التحكم">♧ إشعارات المتصفح</button><button id="refresh" class="refresh" title="تحديث البيانات الآن"><span>↻</span> تحديث</button></div>
+      </header>
+      <div id="status-banner" class="status-banner pending" role="status">لم تصل بيانات حقيقية بعد. ابدأ GitHub Actions لنشر أول تقرير.</div>
+      <section class="stats" aria-label="ملخص الحالة">
+        <div class="stat stat-accent"><div class="stat-label">إجمالي النتائج <span>▦</span></div><div class="stat-value" id="total">0</div><div class="stat-sub">خلال آخر 30 يوماً</div></div>
+        <div class="stat"><div class="stat-label">استغلال مؤكد <span class="red">◉</span></div><div class="stat-value red" id="exploited">0</div><div class="stat-sub">CISA KEV Confirmed</div></div>
+        <div class="stat"><div class="stat-label">Critical / High <span class="amber">▲</span></div><div class="stat-value" id="high">0</div><div class="stat-sub">CVSS أو أهمية الحدث</div></div>
+        <div class="stat"><div class="stat-label">مصادر فعّالة <span class="green">◌</span></div><div class="stat-value" id="healthy">0</div><div class="stat-sub" id="health-desc">لم يبدأ الجمع بعد</div></div>
+      </section>
+      <section class="workspace">
+        <div class="section-heading"><div><div class="eyebrow">THREAT INTELLIGENCE FEED</div><h2 id="list-heading">أحدث التنبيهات والتقارير</h2></div><div id="results-count" class="count-chip">0 نتيجة</div></div>
+        <div class="controls"><label class="search"><span>⌕</span><input id="search" type="search" autocomplete="off" placeholder="ابحث عن CVE أو Product أو Source أو Keyword..." aria-label="البحث"/></label><select id="severity" aria-label="تصفية مستوى الخطورة"><option value="all">جميع مستويات الخطورة</option><option value="Exploited">Exploited</option><option value="Critical">Critical</option><option value="High">High</option><option value="Medium">Medium</option><option value="Unrated">Unrated</option></select><select id="source" aria-label="تصفية المصدر"><option value="all">كل المصادر</option></select><select id="order" aria-label="ترتيب النتائج"><option value="newest">الأحدث أولاً</option><option value="priority">الأعلى أولوية</option></select></div>
+        <div class="feed" id="feed" aria-live="polite"><div class="empty"><div class="empty-symbol">⌁</div><h3>بانتظار أول تقرير</h3><p>ستظهر هنا النتائج الحقيقية بعد اكتمال تشغيل Collector على GitHub.</p></div></div>
+        <div class="footer-meta"><span>معلومات عامة من مصادر خارجية، ويجب التحقق من المصدر قبل اتخاذ إجراء.</span><span>© CTI Radar · No Telegram required</span></div>
+      </section>
+    </main>
+  </div>
+  <dialog id="details"><form method="dialog"><button class="dialog-close" aria-label="إغلاق">✕</button></form><div id="details-body"></div></dialog>
+</body>
+</html>
